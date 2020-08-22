@@ -1,11 +1,23 @@
+dist: trusty
+sudo: false
+
 language: node_js
 node_js:
   - "12"
-before_install:
-  - npm install -g @angular/cli
-install: npm install
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+cache:
+  directories:
+    - ./node_modules
+
+install:
+  - npm install
+
 script:
-  - npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-branches:
-  only:
-    - master
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
