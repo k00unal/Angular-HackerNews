@@ -5,7 +5,7 @@ before_install:
   - npm install -g @angular/cli
 install: npm install
 script:
-  - npm run test
+  - npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
 branches:
   only:
     - master
