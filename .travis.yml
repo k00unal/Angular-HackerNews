@@ -17,3 +17,16 @@ install:
 
 script:
   - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+
+branches:
+  only:
+    - master
+    - dev
+deploy:
+  provider: heroku
+  api_key:
+    secure: "NOnmGW5JLvMN/pCHK3BFGqqo8Usdm3ooF0unPmqZWKsVOKh8WtNepxl4pBb+Z/wxmW8z36cfZwB8SHv2lCZpDT1dSXA/ykxiA7xdo8vMyytqe0mgDn8NhNezZI6suuyGQ1Z6FpuxWg73F+gXvsrp5w410JWYp/ERDTydh5lZO1QuOeMnD3Sl39FqWurMGOJFqwztBRz/P7pyTAG8iO+yqr9yuv0nOGNPafWvdBiiFeeK9h37jVB3dHj9qtnJ20guHheTJZikJX8jN8U4Z9FG0UcyAhIFGVQX4whkFHwqOa4+KlM6vgk8MnwFwbBED7KUhLz8x2zhAJuS3ea3ny15AxmzVIvq5AIjwSdKysOl+VeSJZUzBVYgEB58KmerHHzrU3yYArXkGfvMDic6ECBWastD3pIK79hAXCRslWp6FG5ndiVxbfHwodGvnvsRd4WA2bH47q1OA9dDqcCuRdD2JquweOhYzws6/jvS2tdh5cFSyMOha+yXAR1YX8RI65+QPcoO2ghdHDiAC/W0K2soud7zqsmDunhBuWoc2kiEk1+1x3BJzhjbRbhuh5sMYWkPnE5PBKk8cfW0aCw+CJXmN+KFx82qwHC8SJBP5toUPt2yvamM/3sd8eensDSdDFSHKrwEmldlZ375FKyJpeuZSXWakE0tKr0Jk1HkNtvN8tU="
+
+  app:
+    master: angular-hackernews-app
+    dev: angular-hackernews-staging
