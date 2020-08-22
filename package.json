@@ -7,21 +7,25 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
-    "build": "ng build --prod",
+    "start": "node dist/Angular-HackerNews/server/main.js",
+    "build": "npm run build:ssr",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "dev:ssr": "ng run Angular-HackerNews:serve-ssr",
     "serve:ssr": "node dist/Angular-HackerNews/server/main.js",
     "build:ssr": "ng build --prod && ng run Angular-HackerNews:server:production",
-    "prerender": "ng run Angular-HackerNews:prerender"
+    "prerender": "ng run Angular-HackerNews:prerender",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.0.11",
     "@angular/common": "~10.0.11",
     "@angular/compiler": "~10.0.11",
+    "@angular/cli": "~10.0.7",
+    "@angular/compiler-cli": "~10.0.11",
+    "@nguniversal/builders": "^10.0.2",
     "@angular/core": "~10.0.11",
     "@angular/forms": "~10.0.11",
     "@angular/platform-browser": "~10.0.11",
@@ -32,15 +36,13 @@
     "express": "^4.15.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
+    "@types/express": "^4.17.0",
+    "@types/node": "^12.11.1",
+    "typescript": "~3.9.5",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.7",
-    "@angular/cli": "~10.0.7",
-    "@angular/compiler-cli": "~10.0.11",
-    "@nguniversal/builders": "^10.0.2",
-    "@types/express": "^4.17.0",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "codelyzer": "^6.0.0",
@@ -53,7 +55,6 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~3.9.5"
+    "tslint": "~6.1.0"
   }
 }
