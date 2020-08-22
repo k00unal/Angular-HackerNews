@@ -5,7 +5,7 @@ before_install:
   - npm install -g @angular/cli
 install: npm install
 script:
-  - npm run start
+  - npm run test
 branches:
   only:
     - master
