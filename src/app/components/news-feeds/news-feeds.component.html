@@ -1,0 +1,23 @@
+<!-- <ul>
+  <li *ngFor="let links of news.hits">
+    <a href="{{ links.url }}" target="_blank">{{ links.title }}</a>
+  </li>
+</ul> -->
+
+<div class="container">
+  <div *ngFor="let links of news.hits" class="row">
+    <div class="col-xs-12">
+      <p>
+        <a href="{{ links.url }}">{{ links.title }}</a>
+        <small>
+          (www.nature.com) by
+          <span class="24260337 comment">
+            Eric
+          </span>
+          13 minutes ago
+          <span>Hide</span>
+        </small>
+      </p>
+    </div>
+  </div>
+</div>
