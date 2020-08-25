@@ -1,23 +1,91 @@
-<!-- <ul>
-  <li *ngFor="let links of news.hits">
-    <a href="{{ links.url }}" target="_blank">{{ links.title }}</a>
-  </li>
-</ul> -->
+<div class="boxer">
+  <div class="box-row thead">
+    <!--Headings-->
+    <div class="box">comments</div>
+    <div class="box">vote Count</div>
+    <div class="box">upVote</div>
+    <div class="box">News Details</div>
+  </div>
+  <!-- End of 'box-row' -->
 
-<div class="container">
-  <div *ngFor="let links of news.hits" class="row">
-    <div class="col-xs-12">
-      <p>
-        <a href="{{ links.url }}">{{ links.title }}</a>
-        <small>
-          (www.nature.com) by
-          <span class="24260337 comment">
-            Eric
-          </span>
-          13 minutes ago
-          <span>Hide</span>
-        </small>
-      </p>
+  <!-- Start of 'box-row' -->
+  <div class="box-row" *ngFor="let links of news.hits">
+    <div class="box">{{ links.num_comments }}</div>
+    <div class="box">{{ links.points }}</div>
+    <div class="box votes">
+      <span class="left">
+        <!-- <a
+          href="http://www.ebay.com/ctg/Modern-Web-Development-with-IBM-Websphere-Developing-Deploying-and-Managing-Mobile-and-Multi/143621047"
+          target="_blank"
+          >eBay</a
+        > -->
+      </span>
+      <span class="right">$27.49</span>
+    </div>
+    <div class="box news">
+      <span class="left">
+        <a id="{{ links.objectID }}" href="{{ links.url }}" target="_blank">{{
+          links.title
+        }}</a>
+      </span>
+      <span class="left">{{
+        links.url
+          .split("//")
+          .slice(-1)[0]
+          .split(":")[0]
+          .split(".")
+          .slice(-3)
+          .join(".")
+          .split("/")[0]
+      }}</span>
+      <span class="left">{{ links.author }}</span>
+      <span class="left">by</span>
+      <span class="left">{{ links.created_at | dateAgo }}</span>
+      <span class="left"
+        ><button id="{{ links.objectID }}" (click)="onSave($event)">
+          Hide
+        </button></span
+      >
     </div>
   </div>
+  <!-- End of 'box-row' -->
 </div>
+
+<!-- <div class="container">
+  <div class="row">
+    <div *ngFor="let links of news.hits" class="col-md-12">
+      <div class="row">
+        <div class="main">
+          <div class="col-md-12">
+            <span class="comments">{{ links.num_comments }}</span>
+            <span class="points">{{ links.points }}</span>
+            <a id="{{ links.objectID }}" href="{{ links.url }}" class="title"
+              >{{ links.title }}
+            </a>
+            <div class="domain">
+              {{
+                links.url
+                  .split("//")
+                  .slice(-1)[0]
+                  .split(":")[0]
+                  .split(".")
+                  .slice(-3)
+                  .join(".")
+                  .split("/")[0]
+              }}
+            </div>
+            <span>
+              {{ links.author }}
+            </span>
+          </div>
+          <div class="col-md-12">
+            {{ links.created_at | dateAgo }}
+            <button id="{{ links.objectID }}" (click)="onSave($event)">
+              Hide
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

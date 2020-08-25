@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 
 import { AppHackerNewsService } from './services/app-hacker-news.service';
 import { NewsFeedsComponent } from './components/news-feeds/news-feeds.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
-  declarations: [AppComponent, NewsFeedsComponent],
+  declarations: [AppComponent, NewsFeedsComponent, DateAgoPipe],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
