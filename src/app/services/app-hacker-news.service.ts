@@ -14,8 +14,7 @@ export class AppHackerNewsService {
       .get(`https://hn.algolia.com/api/v1/search_by_date?tags=front_page`)
       .pipe(
         map((data) => {
-          console.log('Apidata', data);
-
+          //console.log('Apidata', data);
           return data;
         })
       );

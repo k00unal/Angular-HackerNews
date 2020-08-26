@@ -9,83 +9,36 @@
   <!-- End of 'box-row' -->
 
   <!-- Start of 'box-row' -->
-  <div class="box-row" *ngFor="let links of news.hits">
+  <div class="box-row" *ngFor="let links of news">
     <div class="box">{{ links.num_comments }}</div>
     <div class="box">{{ links.points }}</div>
     <div class="box votes">
       <span class="left">
-        <!-- <a
-          href="http://www.ebay.com/ctg/Modern-Web-Development-with-IBM-Websphere-Developing-Deploying-and-Managing-Mobile-and-Multi/143621047"
-          target="_blank"
-          >eBay</a
-        > -->
+        <div class="votearrow" title="upvote"></div>
       </span>
-      <span class="right">$27.49</span>
     </div>
     <div class="box news">
       <span class="left">
-        <a id="{{ links.objectID }}" href="{{ links.url }}" target="_blank">{{
-          links.title
-        }}</a>
+        <h6 id="{{ links.objectID }}" class="title">{{ links.title }}</h6>
       </span>
-      <span class="left">{{
-        links.url
-          .split("//")
-          .slice(-1)[0]
-          .split(":")[0]
-          .split(".")
-          .slice(-3)
-          .join(".")
-          .split("/")[0]
-      }}</span>
-      <span class="left">{{ links.author }}</span>
-      <span class="left">by</span>
-      <span class="left">{{ links.created_at | dateAgo }}</span>
+      <span class="left domain"
+        >(<a href="{{ links.url }}">{{ links.url | shortDomain }}</a
+        >)</span
+      >
+      <span class="left by">by</span>
+      <span class="left author">{{ links.author }}</span>
+      <span class="left created">{{ links.created_at | dateAgo }}</span>
       <span class="left"
-        ><button id="{{ links.objectID }}" (click)="onSave($event)">
-          Hide
-        </button></span
+        >[<button
+          class="hide"
+          id="{{ links.objectID }}"
+          (click)="onSave($event)"
+        >
+          Hide</button
+        >]</span
       >
     </div>
   </div>
   <!-- End of 'box-row' -->
 </div>
-
-<!-- <div class="container">
-  <div class="row">
-    <div *ngFor="let links of news.hits" class="col-md-12">
-      <div class="row">
-        <div class="main">
-          <div class="col-md-12">
-            <span class="comments">{{ links.num_comments }}</span>
-            <span class="points">{{ links.points }}</span>
-            <a id="{{ links.objectID }}" href="{{ links.url }}" class="title"
-              >{{ links.title }}
-            </a>
-            <div class="domain">
-              {{
-                links.url
-                  .split("//")
-                  .slice(-1)[0]
-                  .split(":")[0]
-                  .split(".")
-                  .slice(-3)
-                  .join(".")
-                  .split("/")[0]
-              }}
-            </div>
-            <span>
-              {{ links.author }}
-            </span>
-          </div>
-          <div class="col-md-12">
-            {{ links.created_at | dateAgo }}
-            <button id="{{ links.objectID }}" (click)="onSave($event)">
-              Hide
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
+<app-vote-count-charts></app-vote-count-charts>
