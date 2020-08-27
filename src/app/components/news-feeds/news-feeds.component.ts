@@ -1,6 +1,9 @@
 import { AppHackerNewsService } from '../../services/app-hacker-news.service';
 import { Component, OnInit } from '@angular/core';
 
+import { ChartDataSets } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+
 export interface News {
   hits: [
     {
@@ -26,44 +29,83 @@ export class NewsFeedsComponent implements OnInit {
 
   hideme = {};
   news = [];
+  fullData = {};
   votes = [];
   Ids = [];
   chart = [];
-  STORAGE_KEY = 'local_todolist';
   currentPage: number;
-  currentTodoList = [];
+  lineChartData: ChartDataSets[] = [{ data: this.votes, label: 'Votes' }];
+
+  lineChartLabels: Label[] = this.Ids;
+
+  lineChartOptions = {
+    responsive: true,
+    scales: {
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'VOTES',
+          },
+        },
+      ],
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'IDS',
+          },
+        },
+      ],
+    },
+  };
+
+  lineChartColors: Color[] = [
+    {
+      borderColor: '#ff6600',
+    },
+  ];
+
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
 
   ngOnInit(): void {
-    this.loaddata(false);
+    this.loadData(false);
   }
 
-  loaddata(fromPagination): void {
-    if (!fromPagination && sessionStorage.getItem('news')) {
-      this.news = JSON.parse(sessionStorage.getItem('news'));
-      this.currentPage = JSON.parse(sessionStorage.getItem('currentPage'));
+  loadData(fromPagination): void {
+    if (!fromPagination && localStorage.getItem('news')) {
+      this.news = JSON.parse(localStorage.getItem('news'));
+      this.currentPage = JSON.parse(localStorage.getItem('currentPage'));
 
       this.news.forEach((y) => {
         this.Ids.push(y.objectID);
         this.votes.push(y.points);
       });
     } else {
-      if (!fromPagination && localStorage.getItem('pageNo')) {
-        this.currentPage = JSON.parse(localStorage.getItem('pageNo'));
-      }
       this.NewsService.getNews(
         this.currentPage ? this.currentPage : 0
       ).subscribe((news: News) => {
+        this.fullData = news;
         this.news = news.hits;
         this.currentPage = news.page;
-        sessionStorage.setItem('currentPage', JSON.stringify(this.currentPage));
+        localStorage.setItem('currentPage', JSON.stringify(this.currentPage));
+        console.log(this.fullData);
         console.log(this.news);
         console.log(this.currentPage);
-        sessionStorage.setItem('news', JSON.stringify(this.news));
+        localStorage.setItem('news', JSON.stringify(this.news));
 
         this.news.forEach((y) => {
+          // console.log(y.objectID);
+          // console.log(y.points);
           this.Ids.push(y.objectID);
           this.votes.push(y.points);
         });
+        this.lineChartData[0].data = this.votes;
+        this.lineChartLabels = this.Ids;
+        this.lineChartData = this.lineChartData.slice();
+        this.lineChartLabels = this.lineChartLabels.slice();
       });
     }
   }
@@ -73,18 +115,31 @@ export class NewsFeedsComponent implements OnInit {
     if (this.news.length === 0) {
       return this.nextData();
     }
-    sessionStorage.setItem('news', JSON.stringify(this.news));
+    localStorage.setItem('news', JSON.stringify(this.news));
+    this.lineChartData[0].data.splice(index, 1);
+    this.lineChartLabels.splice(index, 1);
+    this.lineChartData = this.lineChartData.slice();
+    this.lineChartLabels = this.lineChartLabels.slice();
   }
   nextData(): void {
     this.currentPage = this.currentPage + 1;
+    //console.log(this.currentPage);
     this.Ids = [];
     this.votes = [];
-    this.loaddata(true);
+    this.loadData(true);
   }
   prevData(): void {
     this.currentPage = this.currentPage - 1;
+    console.log('previous data', this.Ids);
     this.Ids = [];
     this.votes = [];
-    this.loaddata(true);
+    this.loadData(true);
+  }
+  castVote(index): void {
+    this.news[index].points++;
+    localStorage.setItem('news', JSON.stringify(this.news));
+    this.lineChartData[0].data[index] = this.news[index].points;
+    this.lineChartData = this.lineChartData.slice();
+    this.lineChartLabels = this.lineChartLabels.slice();
   }
 }

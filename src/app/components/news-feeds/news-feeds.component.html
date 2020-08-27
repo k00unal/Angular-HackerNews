@@ -14,7 +14,13 @@
     <div class="box">{{ links.points }}</div>
     <div class="box votes">
       <span class="left">
-        <div [routerLink]="" id="vote" class="votearrow" title="upvote"></div>
+        <div
+          [routerLink]=""
+          id="vote"
+          (click)="castVote(i)"
+          class="votearrow"
+          title="upvote"
+        ></div>
       </span>
     </div>
     <div class="box news">
@@ -52,4 +58,17 @@
       ></span
     >
   </div>
+</div>
+<div class="chart-wrapper">
+  <canvas
+    baseChart
+    [datasets]="lineChartData"
+    [labels]="lineChartLabels"
+    [options]="lineChartOptions"
+    [colors]="lineChartColors"
+    [legend]="lineChartLegend"
+    [chartType]="lineChartType"
+    [plugins]="lineChartPlugins"
+  >
+  </canvas>
 </div>
