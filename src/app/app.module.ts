@@ -8,11 +8,16 @@ import { AppComponent } from './app.component';
 import { AppHackerNewsService } from './services/app-hacker-news.service';
 import { NewsFeedsComponent } from './components/news-feeds/news-feeds.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
-import { VoteCountChartsComponent } from './components/vote-count-charts/vote-count-charts.component';
+
 import { ShortDomainPipe } from './pipes/short-domain.pipe';
 
 @NgModule({
-  declarations: [AppComponent, NewsFeedsComponent, DateAgoPipe, VoteCountChartsComponent, ShortDomainPipe],
+  declarations: [
+    AppComponent,
+    NewsFeedsComponent,
+    DateAgoPipe,
+    ShortDomainPipe,
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
