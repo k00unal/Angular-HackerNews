@@ -1,0 +1,74 @@
+<div *ngIf="news" class="boxer">
+  <div class="box-row thead">
+    <!--Headings-->
+    <div class="box">comments</div>
+    <div class="box">vote Count</div>
+    <div class="box">upVote</div>
+    <div class="box">News Details</div>
+  </div>
+  <!-- End of 'box-row' -->
+
+  <!-- Start of 'box-row' -->
+  <div class="box-row" *ngFor="let links of news; let i = index">
+    <div class="box">{{ links.num_comments }}</div>
+    <div class="box">{{ links.points }}</div>
+    <div class="box votes">
+      <span class="left">
+        <div
+          [routerLink]=""
+          id="vote"
+          (click)="castVote(i)"
+          class="votearrow"
+          title="upvote"
+        ></div>
+      </span>
+    </div>
+    <div class="box news">
+      <span class="left">
+        <h6 id="{{ links.objectID }}" class="title">{{ links.title }}</h6>
+      </span>
+      <span class="left domain"
+        >(<a href="{{ links.url }}">{{ links.url | shortDomain }}</a
+        >)</span
+      >
+      <span class="left by">by</span>
+      <span class="left author">{{ links.author }}</span>
+      <span class="left created">{{ links.created_at | dateAgo }}</span>
+      <span class="left"
+        >[<button
+          class="hide"
+          id="{{ links.objectID }}"
+          (click)="hideMe($event)"
+        >
+          Hide</button
+        >]</span
+      >
+    </div>
+  </div>
+  <!-- End of 'box-row' -->
+  <div class="pagination">
+    <span class="prev" *ngIf="currentPage > 0"
+      ><a class="link" id="prev" [routerLink]="" (click)="prevData()"
+        >Previous |
+      </a></span
+    >
+    <span class="next"
+      ><a class="link" id="next" [routerLink]="" (click)="nextData()">
+        Next</a
+      ></span
+    >
+  </div>
+</div>
+<div class="chart-wrapper">
+  <canvas
+    baseChart
+    [datasets]="lineChartData"
+    [labels]="lineChartLabels"
+    [options]="lineChartOptions"
+    [colors]="lineChartColors"
+    [legend]="lineChartLegend"
+    [chartType]="lineChartType"
+    [plugins]="lineChartPlugins"
+  >
+  </canvas>
+</div>

@@ -1,0 +1,105 @@
+.boxer {
+  display: table;
+  border-collapse: collapse;
+  margin: auto;
+  width: 100%;
+}
+.boxer .box-row {
+  display: table-row;
+}
+.boxer .box-row:first-child {
+  font-weight: bold;
+}
+.boxer .box {
+  display: table-cell;
+  vertical-align: top;
+  //border: 1px solid black;
+  padding: 5px;
+  font-family: monospace;
+}
+.boxer .ebay {
+  padding: 5px 1.5em;
+}
+.boxer .google {
+  padding: 5px 1.5em;
+}
+.boxer .amazon {
+  padding: 5px 1.5em;
+}
+.center {
+  text-align: center;
+}
+.right {
+  float: right;
+}
+.box-row.thead {
+  background: #ff6d00;
+  color: black;
+}
+.box-row {
+  background-color: rgb(246, 246, 239);
+}
+
+.votearrow {
+  width: 10px;
+  height: 10px;
+  border: 0px;
+  margin: 3px 2px 6px;
+  background: url("https://news.ycombinator.com/grayarrow.gif") no-repeat;
+}
+
+.title {
+  display: inline-block;
+}
+
+.domain {
+  color: #828282;
+  margin: auto 5px;
+  a {
+    color: #828282;
+  }
+}
+
+.by,
+.author,
+.created,
+.hide {
+  margin: auto 5px;
+}
+
+.by,
+.created {
+  color: #828282;
+}
+
+.hide {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  //color: #069;
+  //text-decoration: underline;
+  cursor: pointer;
+}
+
+.pagination {
+  a {
+    color: #ff6d00;
+  }
+}
+
+@media (max-width: 756px) {
+  // .boxer {
+  //   display: table-caption;
+  //   border-collapse: collapse;
+  // }
+  .news .left {
+    display: block;
+  }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), not all {
+  .votearrow {
+    background-size: 10px;
+    background-image: url(https://news.ycombinator.com/grayarrow2x.gif);
+  }
+}
