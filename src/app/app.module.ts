@@ -12,6 +12,8 @@ import { NewsFeedsComponent } from './components/news-feeds/news-feeds.component
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 import { ShortDomainPipe } from './pipes/short-domain.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { ShortDomainPipe } from './pipes/short-domain.pipe';
     AppRoutingModule,
     HttpClientModule,
     ChartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AppHackerNewsService],
   bootstrap: [AppComponent],

@@ -1,5 +1,6 @@
 import { AppHackerNewsService } from '../../services/app-hacker-news.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
@@ -25,7 +26,14 @@ export interface News {
   styleUrls: ['./news-feeds.component.scss'],
 })
 export class NewsFeedsComponent implements OnInit {
-  constructor(private NewsService: AppHackerNewsService) {}
+  constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
+    private NewsService: AppHackerNewsService
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  public isBrowser: boolean;
 
   hideme = {};
   news = [];
