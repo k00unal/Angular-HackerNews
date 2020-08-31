@@ -1,0 +1,13 @@
+<!-- <p>form pagination component {{ currentPage }}</p> -->
+<div class="pagination">
+  <span class="prev" *ngIf="currentPage > 0"
+    ><a class="link" id="prev" [routerLink]="" (click)="prevPageData()"
+      >Previous |
+    </a></span
+  >
+  <span class="next"
+    ><a class="link" id="next" [routerLink]="" (click)="nextPageData()">
+      Next</a
+    ></span
+  >
+</div>

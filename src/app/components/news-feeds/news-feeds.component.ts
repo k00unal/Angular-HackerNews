@@ -1,24 +1,17 @@
 import { AppHackerNewsService } from '../../services/app-hacker-news.service';
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { LocalStorageService } from './../../services/local-storage.service';
 
-import { ChartDataSets } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
-
-export interface News {
-  hits: [
-    {
-      objectID: string;
-      points: string;
-      num_comments: string;
-      created_at: string;
-      title: string;
-      url: string;
-      author: string;
-    }
-  ];
-  page: number;
-}
+import { News } from '../../interface/news';
 
 @Component({
   selector: 'app-news-feeds',
@@ -26,9 +19,20 @@ export interface News {
   styleUrls: ['./news-feeds.component.scss'],
 })
 export class NewsFeedsComponent implements OnInit {
+  lineChartData = [];
+  lineChartLabels = [];
+  lineChartOptions = {};
+  lineChartColors = [];
+  lineChartLegend: boolean;
+  lineChartType = [];
+  lineChartPlugins: string;
+
+  localStorageChanges$ = this.localStorageService.changes$;
+
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
-    private NewsService: AppHackerNewsService
+    private NewsService: AppHackerNewsService,
+    private localStorageService: LocalStorageService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -42,55 +46,28 @@ export class NewsFeedsComponent implements OnInit {
   Ids = [];
   chart = [];
   currentPage: number;
-  lineChartData: ChartDataSets[] = [{ data: this.votes, label: 'Votes' }];
 
-  lineChartLabels: Label[] = this.Ids;
-
-  lineChartOptions = {
-    responsive: true,
-    scales: {
-      yAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'VOTES',
-          },
-        },
-      ],
-      xAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'IDS',
-          },
-        },
-      ],
-    },
-  };
-
-  lineChartColors: Color[] = [
-    {
-      borderColor: '#ff6600',
-    },
-  ];
-
-  lineChartLegend = true;
-  lineChartPlugins = [];
-  lineChartType = 'line';
+  @Output() outputVotes: EventEmitter<any> = new EventEmitter();
+  @Output() outputId: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
     this.loadData(false);
+    this.emitdata();
   }
 
   loadData(fromPagination): void {
-    if (!fromPagination && localStorage.getItem('news')) {
-      this.news = JSON.parse(localStorage.getItem('news'));
-      this.currentPage = JSON.parse(localStorage.getItem('currentPage'));
+    if (!fromPagination && this.localStorageService.get('news')) {
+      // this.news = JSON.parse(localStorage.getItem('news'));
+      // this.currentPage = JSON.parse(localStorage.getItem('currentPage'));
+      this.news = this.localStorageService.get('news');
+      this.currentPage = this.localStorageService.get('currentPage');
 
       this.news.forEach((y) => {
         this.Ids.push(y.objectID);
         this.votes.push(y.points);
       });
+      console.log('localstorage-id', this.Ids);
+      console.log('localstorage-votes', this.votes);
     } else {
       this.NewsService.getNews(
         this.currentPage ? this.currentPage : 0
@@ -98,11 +75,13 @@ export class NewsFeedsComponent implements OnInit {
         this.fullData = news;
         this.news = news.hits;
         this.currentPage = news.page;
-        localStorage.setItem('currentPage', JSON.stringify(this.currentPage));
+        this.localStorageService.set('currentPage', this.currentPage);
+        this.localStorageService.set('news', this.news);
+        // localStorage.setItem('currentPage', JSON.stringify(this.currentPage));
+        // localStorage.setItem('news', JSON.stringify(this.news));
         console.log(this.fullData);
         console.log(this.news);
         console.log(this.currentPage);
-        localStorage.setItem('news', JSON.stringify(this.news));
 
         this.news.forEach((y) => {
           // console.log(y.objectID);
@@ -110,44 +89,72 @@ export class NewsFeedsComponent implements OnInit {
           this.Ids.push(y.objectID);
           this.votes.push(y.points);
         });
-        this.lineChartData[0].data = this.votes;
-        this.lineChartLabels = this.Ids;
-        this.lineChartData = this.lineChartData.slice();
-        this.lineChartLabels = this.lineChartLabels.slice();
+        // console.log('cl-id', this.Ids);
+        // console.log('cl-votes', this.votes);
+        // this.lineChartData[0].data = this.votes;
+        // this.lineChartLabels = this.Ids;
+        // this.lineChartData = this.lineChartData.slice();
+        // this.lineChartLabels = this.lineChartLabels.slice();
+        //this.addData();
       });
     }
   }
 
   hideMe(index) {
+    const newId = [];
+    const newVotes = [];
     this.news.splice(index, 1);
     if (this.news.length === 0) {
       return this.nextData();
     }
-    localStorage.setItem('news', JSON.stringify(this.news));
-    this.lineChartData[0].data.splice(index, 1);
-    this.lineChartLabels.splice(index, 1);
-    this.lineChartData = this.lineChartData.slice();
-    this.lineChartLabels = this.lineChartLabels.slice();
+    //console.log('hideMe', indx);
+    //localStorage.setItem('news', JSON.stringify(this.news));
+    this.news.forEach((y) => {
+      //console.log('hideMe', y.points);
+      newId.push(y.objectID);
+      newVotes.push(y.points);
+    });
+    // console.log('hideMe', newId);
+    // console.log('hideMe', newVotes);
+    this.votes = newVotes.slice(0);
+    this.Ids = newId.slice(0);
+    this.emitdata();
   }
   nextData(): void {
     this.currentPage = this.currentPage + 1;
     //console.log(this.currentPage);
     this.Ids = [];
     this.votes = [];
+    this.emitdata();
     this.loadData(true);
   }
   prevData(): void {
     this.currentPage = this.currentPage - 1;
-    console.log('previous data', this.Ids);
+    //console.log('previous data', this.Ids);
     this.Ids = [];
     this.votes = [];
+    this.emitdata();
     this.loadData(true);
   }
   castVote(index): void {
+    const newVotes = [];
     this.news[index].points++;
-    localStorage.setItem('news', JSON.stringify(this.news));
-    this.lineChartData[0].data[index] = this.news[index].points;
-    this.lineChartData = this.lineChartData.slice();
-    this.lineChartLabels = this.lineChartLabels.slice();
+    //localStorage.setItem('news', JSON.stringify(this.news));
+    this.localStorageService.set('currentPage', this.currentPage);
+    this.localStorageService.set('news', this.news);
+    this.news.forEach((y) => {
+      //console.log(y.points);
+      newVotes.push(y.points);
+    });
+    this.votes = newVotes.slice(0);
+    //console.log('castevote vote', this.votes);
+    this.emitdata();
   }
+
+  emitdata() {
+    this.outputVotes.emit(this.votes);
+    this.outputId.emit(this.Ids);
+  }
+
+  bookmark() {}
 }

@@ -14,6 +14,8 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { ShortDomainPipe } from './pipes/short-domain.pipe';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { environment } from '../environments/environment';
     NewsFeedsComponent,
     DateAgoPipe,
     ShortDomainPipe,
+    PaginationComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -46,20 +46,14 @@
     </div>
   </div>
   <!-- End of 'box-row' -->
-  <div class="pagination">
-    <span class="prev" *ngIf="currentPage > 0"
-      ><a class="link" id="prev" [routerLink]="" (click)="prevData()"
-        >Previous |
-      </a></span
-    >
-    <span class="next"
-      ><a class="link" id="next" [routerLink]="" (click)="nextData()">
-        Next</a
-      ></span
-    >
-  </div>
+  <app-pagination
+    [currentPage]="currentPage"
+    (prevData)="prevData($event)"
+    (nextData)="nextData($event)"
+  ></app-pagination>
 </div>
-<div class="chart-wrapper">
+
+<!-- <div class="chart-wrapper">
   <canvas
     *ngIf="isBrowser"
     baseChart
@@ -72,4 +66,5 @@
     [plugins]="lineChartPlugins"
   >
   </canvas>
-</div>
+</div> -->
+<!-- <app-chart (outputVotes)="getVotes($event)" (outputId)="getId($event)"></app-chart> -->
