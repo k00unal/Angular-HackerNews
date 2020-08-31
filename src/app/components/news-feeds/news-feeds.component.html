@@ -14,7 +14,13 @@
     <div class="box">{{ links.points }}</div>
     <div class="box votes">
       <span class="left">
-        <div [routerLink]="" id="vote" class="votearrow" title="upvote"></div>
+        <div
+          [routerLink]=""
+          id="vote"
+          (click)="castVote(i)"
+          class="votearrow"
+          title="upvote"
+        ></div>
       </span>
     </div>
     <div class="box news">
@@ -40,16 +46,25 @@
     </div>
   </div>
   <!-- End of 'box-row' -->
-  <div class="pagination">
-    <span class="prev" *ngIf="currentPage > 0"
-      ><a class="link" id="prev" [routerLink]="" (click)="prevData()"
-        >Previous |
-      </a></span
-    >
-    <span class="next"
-      ><a class="link" id="next" [routerLink]="" (click)="nextData()">
-        Next</a
-      ></span
-    >
-  </div>
+  <app-pagination
+    [currentPage]="currentPage"
+    (prevData)="prevData($event)"
+    (nextData)="nextData($event)"
+  ></app-pagination>
 </div>
+
+<!-- <div class="chart-wrapper">
+  <canvas
+    *ngIf="isBrowser"
+    baseChart
+    [datasets]="lineChartData"
+    [labels]="lineChartLabels"
+    [options]="lineChartOptions"
+    [colors]="lineChartColors"
+    [legend]="lineChartLegend"
+    [chartType]="lineChartType"
+    [plugins]="lineChartPlugins"
+  >
+  </canvas>
+</div> -->
+<!-- <app-chart (outputVotes)="getVotes($event)" (outputId)="getId($event)"></app-chart> -->
