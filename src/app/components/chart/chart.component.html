@@ -1,6 +1,7 @@
-<p>chart works!</p>
+<!-- <p>chart works!</p> -->
 <div class="chart-wrapper">
   <canvas
+    *ngIf="isBrowser"
     baseChart
     [datasets]="lineChartData"
     [labels]="lineChartLabels"

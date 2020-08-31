@@ -8,8 +8,9 @@ export class LocalStorageService {
   localStorage: Storage;
   changes$ = new Subject();
   constructor() {
-    this.localStorage = window.localStorage;
+    this.localStorage = localStorage;
   }
+
   get(key: string): any {
     if (this.isLocalStorageSupported) {
       return JSON.parse(this.localStorage.getItem(key));
