@@ -1,7 +1,15 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 
 import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-chart',
@@ -11,14 +19,18 @@ import { Color, Label } from 'ng2-charts';
 export class ChartComponent implements OnChanges {
   // votes = [];
   // Ids = [];
-  // isBrowser: boolean;
+
   // news = [];
   // currentPage: number;
 
   @Input() inputVotes;
   @Input() inputId;
 
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  public isBrowser: boolean;
 
   ngOnChanges(): void {
     // console.log('form chart.ts from feed', this.votes);

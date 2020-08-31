@@ -1,14 +1,6 @@
 import { AppHackerNewsService } from '../../services/app-hacker-news.service';
-import {
-  Component,
-  OnInit,
-  Inject,
-  PLATFORM_ID,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { LocalStorageService } from './../../services/local-storage.service';
 
 import { News } from '../../interface/news';
@@ -30,14 +22,9 @@ export class NewsFeedsComponent implements OnInit {
   localStorageChanges$ = this.localStorageService.changes$;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
     private NewsService: AppHackerNewsService,
     private localStorageService: LocalStorageService
-  ) {
-    this.isBrowser = isPlatformBrowser(platformId);
-  }
-
-  public isBrowser: boolean;
+  ) {}
 
   hideme = {};
   news = [];
@@ -155,6 +142,4 @@ export class NewsFeedsComponent implements OnInit {
     this.outputVotes.emit(this.votes);
     this.outputId.emit(this.Ids);
   }
-
-  bookmark() {}
 }
