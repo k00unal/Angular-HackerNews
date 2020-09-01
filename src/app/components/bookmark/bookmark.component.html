@@ -1,0 +1,11 @@
+<!-- <p>bookmark works!</p> -->
+<div class="bookmark">
+  <button (click)="bookmarkSet()" class="set">
+    bookmark this pg No.<span> {{ currentPage }}</span>
+  </button>
+  <button (click)="bookmarkGet()" class="get">
+    <!-- <span> {{ bookmark.name }}</span> -->
+    <span>|&nbsp;&nbsp; Goto saved page</span>
+    <span> {{ this.bookMarkPage }}</span>
+  </button>
+</div>

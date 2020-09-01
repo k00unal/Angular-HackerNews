@@ -1,11 +1,11 @@
-.pagination {
-  a {
-    //color: #bd5100;
+.bookmark {
+  .set,
+  .get {
     color: #bd5100 !important;
     text-transform: uppercase;
     background: #ffffff;
     padding: 5px;
-    border: 0px solid #ff6d00 !important;
+    border: 0px solid #bd5100 !important;
     border-radius: 6px;
     display: inline-block;
     transition: all 0.3s ease 0s;
@@ -19,5 +19,8 @@
       outline: none;
       border: 0px solid #ff6d00 !important;
     }
+  }
+  .get {
+    margin-left: 5px;
   }
 }

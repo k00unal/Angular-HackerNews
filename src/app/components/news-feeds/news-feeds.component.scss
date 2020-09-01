@@ -55,10 +55,10 @@
 }
 
 .domain {
-  color: #828282;
+  color: #545b62;
   margin: auto 5px;
   a {
-    color: #828282;
+    color: #545b62;
   }
 }
 
@@ -71,7 +71,7 @@
 
 .by,
 .created {
-  color: #828282;
+  color: #545b62;
 }
 
 .hide {
@@ -81,12 +81,6 @@
   //color: #069;
   //text-decoration: underline;
   cursor: pointer;
-}
-
-.pagination {
-  a {
-    color: #ff6d00;
-  }
 }
 
 @media (max-width: 756px) {
