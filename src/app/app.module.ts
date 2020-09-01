@@ -16,6 +16,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { BookmarkComponent } from './components/bookmark/bookmark.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ChartComponent } from './components/chart/chart.component';
     ShortDomainPipe,
     PaginationComponent,
     ChartComponent,
+    BookmarkComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

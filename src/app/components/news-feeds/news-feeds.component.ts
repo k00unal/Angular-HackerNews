@@ -33,6 +33,7 @@ export class NewsFeedsComponent implements OnInit {
   Ids = [];
   chart = [];
   currentPage: number;
+  //bookmarkpage: number;
 
   @Output() outputVotes: EventEmitter<any> = new EventEmitter();
   @Output() outputId: EventEmitter<any> = new EventEmitter();
@@ -142,4 +143,22 @@ export class NewsFeedsComponent implements OnInit {
     this.outputVotes.emit(this.votes);
     this.outputId.emit(this.Ids);
   }
+
+  bookMarkData(): void {
+    this.currentPage = this.localStorageService.get('savePage');
+    //this.currentPage = this.bookMarkPage;
+    console.log('currentPage-bookMarkData', this.currentPage);
+    this.Ids = [];
+    this.votes = [];
+    this.emitdata();
+    this.loadData(true);
+  }
+
+  // bookmark() {
+  //   var pageName = this.localStorageService.set('bookmark', this.currentPage);
+  //   var url_string = window.location.href;
+  //   console.log(url_string);
+  //   console.log(pageName);
+  //   //this.addBookmark();
+  // }
 }

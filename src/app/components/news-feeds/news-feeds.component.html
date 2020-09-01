@@ -52,6 +52,11 @@
     (nextData)="nextData($event)"
   ></app-pagination>
 </div>
+<app-bookmark
+  [currentPage]="currentPage"
+  (bookMark)="bookMarkData()"
+></app-bookmark>
+<!-- <button (click)="bookmark()">bookmark</button> -->
 
 <!-- <div class="chart-wrapper">
   <canvas
