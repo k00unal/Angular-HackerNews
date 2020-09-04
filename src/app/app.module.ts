@@ -17,6 +17,7 @@ import { environment } from '../environments/environment';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { BookmarkComponent } from './components/bookmark/bookmark.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { BookmarkComponent } from './components/bookmark/bookmark.component';
     PaginationComponent,
     ChartComponent,
     BookmarkComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

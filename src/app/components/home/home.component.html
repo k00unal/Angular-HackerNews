@@ -1,0 +1,7 @@
+<!-- <p>home works!</p> -->
+<app-news-feeds
+  (outputVotes)="getVotes($event)"
+  (outputId)="getId($event)"
+></app-news-feeds>
+
+<app-chart [inputVotes]="inputVotes" [inputId]="inputId"></app-chart>

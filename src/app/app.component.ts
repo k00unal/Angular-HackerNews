@@ -8,16 +8,16 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Angular-HackerNews';
 
-  inputVotes = [];
-  inputId = [];
+  // inputVotes = [];
+  // inputId = [];
 
-  getVotes(value) {
-    this.inputVotes = value;
-    //console.log('getvotes', value);
-  }
+  // getVotes(value) {
+  //   this.inputVotes = value;
+  //   //console.log('getvotes', value);
+  // }
 
-  getId(value) {
-    this.inputId = value;
-    //console.log('getid', value);
-  }
+  // getId(value) {
+  //   this.inputId = value;
+  //   //console.log('getid', value);
+  // }
 }

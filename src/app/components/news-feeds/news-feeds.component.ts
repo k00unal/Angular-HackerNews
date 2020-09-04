@@ -1,6 +1,8 @@
 import { AppHackerNewsService } from '../../services/app-hacker-news.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { ActivatedRoute } from '@angular/router';
+
 import { LocalStorageService } from './../../services/local-storage.service';
 
 import { News } from '../../interface/news';
@@ -23,8 +25,31 @@ export class NewsFeedsComponent implements OnInit {
 
   constructor(
     private NewsService: AppHackerNewsService,
-    private localStorageService: LocalStorageService
-  ) {}
+    private localStorageService: LocalStorageService,
+    private activeRoute: ActivatedRoute
+  ) {
+    // this.activeRoute.queryParams.subscribe((queryParams) => {
+    //   // do something with the query params
+    //   const newId = [];
+    //   const newVotes = [];
+    //   const page = this.activeRoute.snapshot.queryParams;
+    //   const currentPage = page.currentPage;
+    //   this.currentPage = currentPage;
+    //   console.log('queryParams updated currentPage', page.currentPage);
+    //   this.news.forEach((y) => {
+    //     //console.log('hideMe', y.points);
+    //     newId.push(y.objectID);
+    //     newVotes.push(y.points);
+    //   });
+    //   this.Ids = newId.slice(0);
+    //   this.votes = newVotes.slice(0);
+    //   console.log('acivated id', this.Ids);
+    //   console.log('acivated vote', this.votes);
+    //   this.localStorageService.set('news', this.news);
+    //   this.loadData(true);
+    //   this.emitdata();
+    // });
+  }
 
   hideme = {};
   news = [];
@@ -39,6 +64,24 @@ export class NewsFeedsComponent implements OnInit {
   @Output() outputId: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
+    const queryParams = this.activeRoute.snapshot.queryParams;
+    const routeParams = this.activeRoute.snapshot.params;
+    console.log('routeParams', routeParams);
+    console.log('queryParams', queryParams);
+    this.currentPage = queryParams.currentPage;
+    console.log('queryParams updated currentPage', this.currentPage);
+    //do something with the parameters
+    this.activeRoute.queryParams.subscribe((queryParams) => {
+      // do something with the query params
+      const page = this.activeRoute.snapshot.queryParams;
+      const currentPage = page.currentPage;
+      console.log('queryParams updated currentPage', page.currentPage);
+      this.loadData((this.currentPage = currentPage));
+      this.Ids = [];
+      this.votes = [];
+      this.emitdata();
+    });
+
     this.loadData(false);
     this.emitdata();
   }
@@ -56,7 +99,40 @@ export class NewsFeedsComponent implements OnInit {
       });
       console.log('localstorage-id', this.Ids);
       console.log('localstorage-votes', this.votes);
-    } else {
+    }
+    // if (!fromPagination && this.localStorageService.get('news')) {
+    //   const newId = [];
+    //   const newVotes = [];
+    //   this.news = this.localStorageService.get('news');
+    //   this.currentPage = this.localStorageService.get('currentPage');
+    //   this.news.forEach((y) => {
+    //     //console.log('hideMe', y.points);
+    //     //newId.push(y.objectID);
+    //     newVotes.push(y.points);
+    //   });
+
+    //   //this.Ids = newId.slice(0);
+    //   //this.votes = newVotes.slice(0);
+    //   //this.loadData(true);
+    //   //this.emitdata();
+    //   console.log('localstorage-id from active route', this.Ids);
+    //   console.log('localstorage-votes from active route', this.votes);
+    //   this.activeRoute.queryParams.subscribe((queryParams) => {
+    //     // do something with the query params
+
+    //     const page = this.activeRoute.snapshot.queryParams;
+    //     const currentPage = page.currentPage;
+    //     this.currentPage = currentPage;
+    //     console.log('queryParams updated currentPage', page.currentPage);
+
+    //     console.log('acivated id', this.Ids);
+    //     console.log('acivated vote', this.votes);
+    //     this.localStorageService.set('news', this.news);
+    //     // this.loadData((this.currentPage = currentPage));
+    //     // this.emitdata();
+    //   });
+    // }
+    else {
       this.NewsService.getNews(
         this.currentPage ? this.currentPage : 0
       ).subscribe((news: News) => {
@@ -69,7 +145,7 @@ export class NewsFeedsComponent implements OnInit {
         // localStorage.setItem('news', JSON.stringify(this.news));
         console.log(this.fullData);
         console.log(this.news);
-        console.log(this.currentPage);
+        console.log('currentpage', this.currentPage);
 
         this.news.forEach((y) => {
           // console.log(y.objectID);
@@ -128,7 +204,7 @@ export class NewsFeedsComponent implements OnInit {
     const newVotes = [];
     this.news[index].points++;
     //localStorage.setItem('news', JSON.stringify(this.news));
-    this.localStorageService.set('currentPage', this.currentPage);
+    //this.localStorageService.set('currentPage', this.currentPage);
     this.localStorageService.set('news', this.news);
     this.news.forEach((y) => {
       //console.log(y.points);
@@ -154,11 +230,12 @@ export class NewsFeedsComponent implements OnInit {
     this.loadData(true);
   }
 
-  // bookmark() {
-  //   var pageName = this.localStorageService.set('bookmark', this.currentPage);
-  //   var url_string = window.location.href;
-  //   console.log(url_string);
-  //   console.log(pageName);
-  //   //this.addBookmark();
+  // goToPage($event) {
+  //   this.currentPage = $event;
+  //   console.log('goToPage', this.currentPage);
+  //   this.Ids = [];
+  //   this.votes = [];
+  //   this.emitdata();
+  //   this.loadData(true);
   // }
 }

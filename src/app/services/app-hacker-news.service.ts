@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 export class AppHackerNewsService {
   private NEW_API =
     'https://hn.algolia.com/api/v1/search?query=front_page&hitsPerPage=10&page=';
+  ROOT_URl =
+    'https://hn.algolia.com/api/v1/search?query=front_page&hitsPerPage=10&page=6';
 
   constructor(private http: HttpClient) {}
 
